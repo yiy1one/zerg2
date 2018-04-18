@@ -12,4 +12,7 @@
 use think\Route;
 
 
-Route::any();
+
+
+
+Route::get('banner/:id','api/v1.Banner/getBanner');
