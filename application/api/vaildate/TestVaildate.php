@@ -14,6 +14,7 @@ use think\Validate;
 class TestVaildate extends Validate
 {
 
+
     protected $rule = [
         'name' => 'require|max:10',
         'email' => 'email'

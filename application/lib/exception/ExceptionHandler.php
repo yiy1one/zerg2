@@ -9,7 +9,6 @@
 namespace app\lib\exception;
 
 
-use think\Exception;
 use think\exception\Handle;
 use think\Log;
 use think\Request;
@@ -22,7 +21,7 @@ class ExceptionHandler extends Handle
     private $errorCode;
     //还要返回url
 
-    public function render(Exception $e)
+    public function render(\Exception $e)
     {
 
         if($e instanceof BaseException){
@@ -32,11 +31,16 @@ class ExceptionHandler extends Handle
             $this->errorCode = $e->errorCode;
         }else{
 
-            $this->code = 500;
-            $this->msg = '服务器内部错误';
-            $this->errorCode = 999;
+            if(config('app_debug')){
+                return parent::render($e);
+            }else{
+                $this->code = 500;
+                $this->msg = '服务器内部错误';
+                $this->errorCode = 999;
 
-            $this->recorderrorLog($e);
+                $this->recorderrorLog($e);
+            }
+
 
         }
 
@@ -52,7 +56,7 @@ class ExceptionHandler extends Handle
 
     }
 
-    private function recorderrorLog(Exception $e){
+    private function recorderrorLog(\Exception $e){
         Log::init([
             'type' => 'File',
             'path' => LOG_PATH,

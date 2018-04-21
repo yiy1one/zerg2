@@ -15,13 +15,7 @@ use app\lib\exception\BannerMissException;
 
 class Banner
 {
-    //banner的id号
-    /**
-     * @param $id
-     * @return null
-     * @throws BannerMissException
-     * @throws \think\Exception
-     */
+
     public function getBanner($id){
 
 
@@ -31,15 +25,14 @@ class Banner
 
         $banner = BannerModel::getBannerById($id);
 
+
         if(!$banner){
-            throw new Exception('内部错误');
+
+            throw new BannerMissException();
+
         }
 
-
         return $banner;
-
-
-
 
     }
 
